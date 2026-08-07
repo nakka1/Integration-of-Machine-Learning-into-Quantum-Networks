@@ -118,6 +118,7 @@ asynchronous stream to instrument.
 │   │   ├──  test_models_and_timing.py
 │   │   ├──  test_baselines.py
 │   │   ├──  test_metrics.py
+├── CITATION.cff
 ├── requirements.txt
 ├── setup.py
 └── README.md
