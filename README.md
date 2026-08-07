@@ -94,42 +94,33 @@ measurement, directly on the CUDA stream, immune to host-side jitter),
 falling back to `time.perf_counter()` only on CPU, where there is no
 asynchronous stream to instrument.
 
-## 3. Monolithic architecture (single notebook)
-
-**Before:** the entire pipeline (channel simulator, model, quantum
-dataplane, orchestrator, Pareto sweep, `main`) lived in the cells of a
-single Jupyter notebook -- hard to test, import, or version granularly.
-
-**Now:** the code has been decomposed into the `qrepeater_twin/` package,
-with one module per responsibility, a test suite (`tests/`), and a CLI
-entry point (`qrepeater_twin/cli.py`) runnable outside any Jupyter kernel.
-The original notebook is now a thin driver that imports the package --
-kept for interactive exploration, not for business logic.
-
 ## Repository structure
 
 ```
-qrepeater_twin/
-    __init__.py          # public package API
-    config.py             # Sim/Train/Quantum/Sweep/Baseline/Energy/Comparison configs
-    channel_simulator.py  # WDMChannelSimulator (synthetic data generation)
-    models.py              # EdgeLSTM, CS_MSELoss, train_edge_lstm
-    timing.py                # InferenceTimer (CUDA Events / perf_counter)
-    quantum_node.py           # QuantumRepeaterNode (dataplane via Qiskit Aer)
-    orchestrator.py            # DigitalTwinOrchestrator (run_intelligent / run_blind_baseline)
-    pareto_sweep.py              # run_pareto_sweep (multi-seed averaging over lambda_penalty)
-    baselines.py                   # LSTM+MSE, Random Forest, XGBoost, Transformer predictors
-    metrics.py                       # throughput, QPU economy, energy, decision matrix
-    model_comparison.py                # run_model_comparison (cross-architecture, multi-seed)
-    cli.py                               # main() + argparse
-tests/
-    test_channel_simulator.py
-    test_models_and_timing.py
-    test_baselines.py
-    test_metrics.py
-quantum_repeater_digital_twin_pareto.ipynb  # thin notebook, only orchestrates the package
-requirements.txt
-setup.py
+│ qrepeater_twin/
+│   ├── notebooks/
+│   │   └── quantum_repeater_digital_twin_pareto.ipynb  #notebook with explanation
+│   ├── src/
+│   │   ├──  __init__.py          # public package API
+│   │   ├──  config.py             # Sim/Train/Quantum/Sweep/Baseline/Energy/Comparison configs
+│   │   ├──  channel_simulator.py  # WDMChannelSimulator (synthetic data generation)
+│   │   ├──  models.py              # EdgeLSTM, CS_MSELoss, train_edge_lstm
+│   │   ├──  timing.py                # InferenceTimer (CUDA Events / perf_counter)
+│   │   ├──  quantum_node.py           # QuantumRepeaterNode (dataplane via Qiskit Aer)
+│   │   ├──  orchestrator.py            # DigitalTwinOrchestrator (run_intelligent / run_blind_baseline)
+│   │   ├──  pareto_sweep.py              # run_pareto_sweep (multi-seed averaging over lambda_penalty)
+│   │   ├──  baselines.py                   # LSTM+MSE, Random Forest, XGBoost, Transformer predictors
+│   │   ├──  metrics.py                       # throughput, QPU economy, energy, decision matrix
+│   │   ├──  model_comparison.py                # run_model_comparison (cross-architecture, multi-seed)
+│   │   ├──  cli.py                               # main() + argparse
+│   ├── tests/
+│   │   ├──  test_channel_simulator.py
+│   │   ├──  test_models_and_timing.py
+│   │   ├──  test_baselines.py
+│   │   ├──  test_metrics.py
+├── requirements.txt
+├── setup.py
+└── README.md
 ```
 
 ## Usage
