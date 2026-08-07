@@ -1,0 +1,13 @@
+torch>=2.0
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+qiskit>=1.0
+qiskit-aer>=0.14
+pytest>=7.4
+
+# Optional: only required for the XGBoost baseline in
+# qrepeater_twin/baselines.py and qrepeater_twin/model_comparison.py.
+# Comparison runs (CLI: --compare-baselines) skip the XGBoost row with a
+# warning, rather than failing, if this is not installed.
+xgboost>=2.0
