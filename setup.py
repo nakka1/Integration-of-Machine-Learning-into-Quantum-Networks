@@ -11,6 +11,7 @@ setup(
         "numpy>=1.24",
         "pandas>=2.0",
         "scikit-learn>=1.3",
+        "matplotlib>=3.7",
         "qiskit>=1.0",
         "qiskit-aer>=0.14",
     ],

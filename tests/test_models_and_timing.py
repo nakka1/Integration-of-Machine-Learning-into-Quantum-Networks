@@ -1,6 +1,6 @@
 import torch
 
-from qrepeater_twin import CS_MSELoss, EdgeLSTM, InferenceTimer, train_edge_lstm
+from qrepeater_twin import CS_MSELoss, EdgeLSTM, InferenceTimer, StandardLSTM, train_edge_lstm
 
 
 def test_edge_lstm_output_shape_and_range():
@@ -10,6 +10,35 @@ def test_edge_lstm_output_shape_and_range():
     out = model(x)
     assert out.shape == (4, 1)
     assert torch.all(out >= 0.0) and torch.all(out <= 1.0)
+
+
+def test_standard_lstm_output_shape_and_range():
+    torch.manual_seed(0)
+    model = StandardLSTM(input_size=2, hidden_size=32, num_layers=2, dropout=0.1)
+    x = torch.rand(4, 20, 2)
+    out = model(x)
+    assert out.shape == (4, 1)
+    assert torch.all(out >= 0.0) and torch.all(out <= 1.0)
+
+
+def test_standard_lstm_single_layer_ignores_inter_layer_dropout():
+    # nn.LSTM only accepts dropout > 0 when num_layers > 1; StandardLSTM
+    # must silently zero it out for num_layers == 1 rather than raising.
+    torch.manual_seed(0)
+    model = StandardLSTM(input_size=2, hidden_size=16, num_layers=1, dropout=0.5)
+    x = torch.rand(2, 20, 2)
+    out = model(x)
+    assert out.shape == (2, 1)
+
+
+def test_standard_lstm_has_more_parameters_than_edge_lstm_by_default():
+    # The whole point of StandardLSTM as the ablation's architecture
+    # counterpart is that it is NOT edge-optimized (larger capacity).
+    edge = EdgeLSTM(input_size=2, hidden_size=16, num_layers=1)
+    standard = StandardLSTM(input_size=2, hidden_size=64, num_layers=2, dropout=0.1)
+    n_params_edge = sum(p.numel() for p in edge.parameters())
+    n_params_standard = sum(p.numel() for p in standard.parameters())
+    assert n_params_standard > n_params_edge
 
 
 def test_cs_mse_loss_penalizes_false_positive_more_than_false_negative():
