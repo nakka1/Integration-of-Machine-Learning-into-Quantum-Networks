@@ -40,6 +40,7 @@ accounting, ranked by a multi-criteria decision matrix.
 │   │   ├──  test_models_and_timing.py
 │   │   ├──  test_baselines.py
 │   │   ├──  test_metrics.py
+├── CITATION.cff
 ├── requirements.txt
 ├── setup.py
 └── README.md
