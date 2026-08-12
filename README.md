@@ -97,13 +97,13 @@ This project is distributed under the Apache 2.0 license.
 
 ## Version History
 
-| Versão | Data | Descrição |
-| ------- | ------------ | ------------------------------------------ |
-| v1 | - | Notebook monolítico original: simulador de canal, EdgeLSTM, CS_MSELoss, dataplane quântico e orquestrador em um único Jupyter Notebook, sem testes, com treino em batch único / seed única e profiling via `time.perf_counter()`. |
-| v2 | 2026-08-07 | Decomposição em pacote `qrepeater_twin/` (um módulo por responsabilidade); correção da fragilidade estatística via multi-seed averaging na Pareto Frontier (mean ± std); micro-profiling corrigido com `torch.cuda.Event` (`InferenceTimer`); suíte de testes `pytest`. |
-| v3 | 2026-08-07 | Comparação cross-architecture contra baselines (LSTM+MSE, Random Forest, XGBoost, Transformer); matriz de confusão de admissão (TP/FP/TN/FN); razão adimensional de latência `C_latência = τ_inf/T2`; throughput; economia de QPU; contabilidade de energia; matriz de decisão multicritério ponderada. |
-| v3.1 | 2026-08-08 | Análise de sensibilidade dos pesos da matriz de decisão (perturbação automática ±10%, taxa de vitória por modelo); ajustes estruturais nas métricas derivadas. |
-| v3.2 | 2026-08-09 | Avaliação preditiva completa da EdgeLSTM (MAE/RMSE/R² + análise temporal de cruzamento de limiar: atraso/antecipação, eventos perdidos, falsos alarmes); estudo de ablação fatorial 2×2 (`{EdgeLSTM, StandardLSTM} × {MSE, CS-MSE}` com decomposição de efeitos); pipeline automática de rastreamento de experimentos (`ExperimentRun`, config/tabelas/figuras/manifest); `metrics.py` reestruturado no pacote `metrics/` (`prediction.py`, `quantum.py`, `performance.py`, `decision.py`); módulo `plotting.py` com gráficos para cada tabela de resultado. |
+| Version | Date       | Description |
+| ------ | ---------- | --------------- |
+| v1     | -          | Original monolithic notebook: channel simulator, EdgeLSTM, CS\_MSELoss, quantum dataplane, and orchestrator implemented in a single Jupyter Notebook, with no tests, single-batch/single-seed training, and profiling via `time.perf_counter()`. |
+| v2     | 2026-08-07 | Decomposition into the `qrepeater_twin/` package (one module per responsibility); mitigation of statistical fragility through multi-seed averaging in the Pareto Frontier (mean ± std); corrected micro-profiling using `torch.cuda.Event` (`InferenceTimer`); and a `pytest` test suite. |
+| v3     | 2026-08-07 | Cross-architecture comparison against baselines (LSTM+MSE, Random Forest, XGBoost, Transformer); admission confusion matrix (TP/FP/TN/FN); dimensionless latency ratio `C_latency = τ_inf/T2`; throughput; QPU savings; energy accounting; and weighted multi-criteria decision matrix. |
+| v3.1   | 2026-08-08 | Sensitivity analysis of the decision-matrix weights (automatic ±10% perturbation and model win rate); structural improvements to derived metrics. |
+| v3.2   | 2026-08-09 | Full predictive evaluation of EdgeLSTM (MAE/RMSE/R² + temporal threshold-crossing analysis: delay/anticipation, missed events, false alarms); 2×2 factorial ablation study (`{EdgeLSTM, StandardLSTM} × {MSE, CS-MSE}` with effect decomposition); automated experiment-tracking pipeline (`ExperimentRun`, configuration/tables/figures/manifest); `metrics.py` restructured into the `metrics/` package (`prediction.py`, `quantum.py`, `performance.py`, `decision.py`); and `plotting.py` module with charts for each result table. |
 
 ### 0.2 What's new in v3.2: predictive evaluation, ablation, experiment pipeline
 
