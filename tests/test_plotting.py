@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 from matplotlib.figure import Figure
 
-from qrepeater_twin import plotting
+from quantum_twin import plotting
 
 
 # ---------------------------------------------------------------------------
@@ -123,3 +123,58 @@ def test_save_path_actually_writes_a_file(tmp_path):
     plotting.plot_model_comparison_bars(df, save_path=str(save_path))
     assert save_path.exists()
     assert save_path.stat().st_size > 0
+
+
+# ---------------------------------------------------------------------------
+# New in v3.3: significance forest plot, walk-forward plots
+# ---------------------------------------------------------------------------
+
+def test_plot_significance_forest_returns_figure():
+    sig_df = pd.DataFrame({
+        "Model": ["LSTM+MSE", "RandomForest", "Oracle"],
+        "Metric": ["qpu_yield_pct"] * 3,
+        "Mean Difference": [-25.0, -15.0, 14.0],
+        "95% CI Low": [-30.0, -20.0, 10.0],
+        "95% CI High": [-20.0, -10.0, 18.0],
+        "Significant (t-test, Holm, alpha=0.05)": [True, True, False],
+    })
+    fig = plotting.plot_significance_forest(sig_df)
+    assert isinstance(fig, Figure)
+
+
+def test_plot_significance_forest_handles_missing_significance_column():
+    sig_df = pd.DataFrame({
+        "Model": ["LSTM+MSE"],
+        "Metric": ["mae"],
+        "Mean Difference": [0.02],
+        "95% CI Low": [0.01],
+        "95% CI High": [0.03],
+    })
+    fig = plotting.plot_significance_forest(sig_df)
+    assert isinstance(fig, Figure)
+
+
+def test_plot_walk_forward_folds_returns_figure_with_summary():
+    fold_df = pd.DataFrame({"fold": [0, 1, 2], "qpu_yield_pct": [80.0, 82.0, 78.0]})
+    summary_df = pd.DataFrame({
+        "Metric": ["qpu_yield_pct"], "Mean": [80.0],
+        "95% CI Low": [76.0], "95% CI High": [84.0], "N Folds": [3],
+    })
+    fig = plotting.plot_walk_forward_folds(fold_df, summary_df, metric="qpu_yield_pct")
+    assert isinstance(fig, Figure)
+
+
+def test_plot_walk_forward_folds_without_summary():
+    fold_df = pd.DataFrame({"fold": [0, 1], "mae": [0.05, 0.04]})
+    fig = plotting.plot_walk_forward_folds(fold_df, metric="mae")
+    assert isinstance(fig, Figure)
+
+
+def test_plot_walk_forward_timeline_returns_figure():
+    splits = [
+        (range(0, 300), range(300, 450)),
+        (range(0, 450), range(450, 600)),
+        (range(0, 600), range(600, 750)),
+    ]
+    fig = plotting.plot_walk_forward_timeline(splits, n_samples=800)
+    assert isinstance(fig, Figure)

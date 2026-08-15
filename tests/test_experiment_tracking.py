@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import pytest
 
-from qrepeater_twin.experiment_tracking import (
+from quantum_twin.experiment_tracking import (
     ExperimentRun,
     track_ablation_experiment,
     track_model_comparison_experiment,

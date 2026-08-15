@@ -1,8 +1,8 @@
 import pytest
 import torch
 
-from qrepeater_twin.ablation import _build_decomposition_df, run_ablation_study
-from qrepeater_twin.config import AblationConfig, QuantumConfig, TrainConfig
+from quantum_twin.ablation import _build_decomposition_df, run_ablation_study
+from quantum_twin.config import AblationConfig, QuantumConfig, TrainConfig
 
 
 # ---------------------------------------------------------------------------

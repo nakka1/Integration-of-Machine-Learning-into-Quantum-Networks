@@ -2,7 +2,7 @@ import itertools
 
 import pytest
 
-from qrepeater_twin.sensitivity import run_weight_sensitivity_analysis, summarize_robustness
+from quantum_twin.sensitivity import run_weight_sensitivity_analysis, summarize_robustness
 
 
 BASE_WEIGHTS = {

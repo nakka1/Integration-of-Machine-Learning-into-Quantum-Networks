@@ -1,0 +1,105 @@
+site_name: Quantum Twin
+site_description: >-
+  Digital Twin of a Quantum Repeater with a predictive admission
+  controller (EdgeLSTM + CS_MSELoss).
+repo_url: https://github.com/example/quantum-twin
+repo_name: quantum-twin
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+  - Architecture: architecture.md
+  - Guides:
+      - Running experiments: guides/experiments.md
+      - Statistical rigor: guides/statistical-rigor.md
+      - Experiment tracking (MLflow): guides/experiment-tracking.md
+  - API reference:
+      - Overview: api/index.md
+      - channel_simulator: api/channel_simulator.md
+      - models: api/models.md
+      - quantum_node: api/quantum_node.md
+      - orchestrator: api/orchestrator.md
+      - pareto_sweep: api/pareto_sweep.md
+      - baselines: api/baselines.md
+      - metrics: api/metrics.md
+      - model_comparison: api/model_comparison.md
+      - ablation: api/ablation.md
+      - sensitivity: api/sensitivity.md
+      - statistics_tests: api/statistics_tests.md
+      - walk_forward: api/walk_forward.md
+      - reproducibility: api/reproducibility.md
+      - plotting: api/plotting.md
+      - latex_export: api/latex_export.md
+      - experiment_tracking: api/experiment_tracking.md
+      - mlops: api/mlops.md
+      - config: api/config.md
+      - cli: api/cli.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+  - tables
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+            group_by_category: true
+
+watch:
+  - src/quantum_twin

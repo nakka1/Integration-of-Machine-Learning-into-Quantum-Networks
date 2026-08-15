@@ -1,8 +1,8 @@
 import pytest
 import torch
 
-from qrepeater_twin import EdgeLSTM, TinyTransformer
-from qrepeater_twin.baselines import (
+from quantum_twin import EdgeLSTM, TinyTransformer
+from quantum_twin.baselines import (
     RandomForestFidelityModel,
     train_lstm_mse,
     train_random_forest,

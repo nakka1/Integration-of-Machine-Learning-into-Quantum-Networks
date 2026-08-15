@@ -1,6 +1,6 @@
 import numpy as np
 
-from qrepeater_twin import WDMChannelSimulator
+from quantum_twin import WDMChannelSimulator
 
 
 def test_generate_dataset_shape_and_bounds():

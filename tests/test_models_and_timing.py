@@ -1,6 +1,6 @@
 import torch
 
-from qrepeater_twin import CS_MSELoss, EdgeLSTM, InferenceTimer, StandardLSTM, train_edge_lstm
+from quantum_twin import CS_MSELoss, EdgeLSTM, InferenceTimer, StandardLSTM, train_edge_lstm
 
 
 def test_edge_lstm_output_shape_and_range():
